@@ -1,0 +1,159 @@
+# ============================================================
+# WALLGREENS FORMSOLUTIONS — ADMIN CMS CONFIG (Decap CMS)
+# ============================================================
+# After setup, admin is accessible at: https://formwork.in/admin/
+
+backend:
+  name: github
+  repo: directoroffice-del/wallgreens-site
+  branch: main
+  base_url: https://decap-proxy.fly.dev        # OAuth proxy (free shared instance)
+
+# All uploaded images go here and are automatically available to the site
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+# Keep drafts as PRs instead of publishing instantly (safer)
+publish_mode: editorial_workflow
+
+# Friendly site name in the admin UI
+site_url: https://formwork.in
+display_url: https://formwork.in
+logo_url: https://formwork.in/assets/wallgreens-logo.png
+
+# ------------------------------------------------------------
+# COLLECTIONS — what the admin can edit
+# ------------------------------------------------------------
+collections:
+
+  # ─── News / Blog posts ─────────────────────────────────
+  - name: "news"
+    label: "📰 News & Blog"
+    label_singular: "News Post"
+    folder: "_content/news"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Cover Image", name: "thumbnail", widget: "image", required: false }
+      - { label: "Summary", name: "summary", widget: "text" }
+      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Category", name: "category", widget: "select",
+          options: ["Company News", "Project Update", "Product Launch", "Industry Insight"] }
+
+  # ─── Project Directory (50 entries) ────────────────────
+  - name: "projects"
+    label: "🏗️ Project Directory"
+    label_singular: "Project"
+    folder: "_content/projects"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Project Name", name: "title", widget: "string" }
+      - { label: "Contractor", name: "contractor", widget: "string" }
+      - { label: "Location", name: "location", widget: "string" }
+      - { label: "Sector", name: "sector", widget: "select",
+          options: ["Residential", "Commercial", "Infrastructure", "Industrial"] }
+      - { label: "Hero Image", name: "hero", widget: "image", required: false }
+      - { label: "Products Used", name: "products", widget: "list" }
+      - { label: "Overview", name: "body", widget: "markdown" }
+
+  # ─── Media Library (drag-drop photos) ───────────────────
+  # This is the KEY collection — drop images here and they're instantly
+  # available to paste into any page via the media library button.
+  - name: "media"
+    label: "🖼️ Media Library"
+    label_singular: "Image"
+    folder: "assets/uploads"
+    create: true
+    extension: "md"
+    format: "frontmatter"
+    identifier_field: "image"
+    summary: "{{image}}"
+    slug: "{{filename}}"
+    fields:
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Caption / alt text", name: "caption", widget: "string", required: false }
+      - { label: "Used on", name: "used_on", widget: "string", required: false,
+          hint: "Optional note — which page(s) use this image" }
+
+  # ─── Product Photos (direct swap) ───────────────────────
+  # Lets admin replace product card photos without touching HTML
+  - name: "products"
+    label: "🧱 Product Photos"
+    label_singular: "Product"
+    files:
+      - label: "Mach Deck"
+        name: "mach-deck"
+        file: "_content/products/mach-deck.md"
+        fields:
+          - { label: "Product Photo", name: "image", widget: "image" }
+          - { label: "Short Description", name: "description", widget: "text" }
+      - label: "J70 StiMBER™"
+        name: "j70-stimber"
+        file: "_content/products/j70-stimber.md"
+        fields:
+          - { label: "Product Photo", name: "image", widget: "image" }
+          - { label: "Short Description", name: "description", widget: "text" }
+      - label: "J50 StiMBER™"
+        name: "j50-stimber"
+        file: "_content/products/j50-stimber.md"
+        fields:
+          - { label: "Product Photo", name: "image", widget: "image" }
+          - { label: "Short Description", name: "description", widget: "text" }
+      - label: "Mach AluPly"
+        name: "mach-aluply"
+        file: "_content/products/mach-aluply.md"
+        fields:
+          - { label: "Product Photo", name: "image", widget: "image" }
+          - { label: "Short Description", name: "description", widget: "text" }
+      - label: "Mach MetPly"
+        name: "mach-metply"
+        file: "_content/products/mach-metply.md"
+        fields:
+          - { label: "Product Photo", name: "image", widget: "image" }
+          - { label: "Short Description", name: "description", widget: "text" }
+      - label: "Film Faced Plywood"
+        name: "film-faced-plywood"
+        file: "_content/products/film-faced-plywood.md"
+        fields:
+          - { label: "Product Photo", name: "image", widget: "image" }
+          - { label: "Short Description", name: "description", widget: "text" }
+      - label: "Ring Lock Scaffolding"
+        name: "ring-lock-scaffolding"
+        file: "_content/products/ring-lock-scaffolding.md"
+        fields:
+          - { label: "Product Photo", name: "image", widget: "image" }
+          - { label: "Short Description", name: "description", widget: "text" }
+      - label: "Cup Lock Scaffolding"
+        name: "cup-lock-scaffolding"
+        file: "_content/products/cup-lock-scaffolding.md"
+        fields:
+          - { label: "Product Photo", name: "image", widget: "image" }
+          - { label: "Short Description", name: "description", widget: "text" }
+      - label: "Aluminium Scaffolding"
+        name: "aluminium-scaffolding"
+        file: "_content/products/aluminium-scaffolding.md"
+        fields:
+          - { label: "Product Photo", name: "image", widget: "image" }
+          - { label: "Short Description", name: "description", widget: "text" }
+
+  # ─── Site Settings (contact info, one file) ─────────────
+  - name: "settings"
+    label: "⚙️ Site Settings"
+    files:
+      - label: "Contact Info"
+        name: "contact"
+        file: "_content/settings/contact.md"
+        fields:
+          - { label: "Primary Phone", name: "phone_primary", widget: "string" }
+          - { label: "Director Phone", name: "phone_director", widget: "string", required: false }
+          - { label: "Support Phone", name: "phone_support", widget: "string", required: false }
+          - { label: "Primary Email", name: "email_primary", widget: "string" }
+          - { label: "Office Address", name: "address", widget: "text" }
+          - { label: "WhatsApp Number", name: "whatsapp", widget: "string", required: false }
