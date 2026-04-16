@@ -568,8 +568,27 @@ header { height: 0; overflow: visible; }
 .product-features li::before { content: ''; width: 6px; height: 6px; background: var(--red); border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
 .product-cta-box {
   background: var(--offwhite); border: 1px solid #cecece;
-  border-radius: var(--radius-lg); padding: 28px; position: sticky;
+  border-radius: var(--radius-lg); padding: 28px;
+  /* sticky moved to wrapper so CTA + related-products stick together */
+}
+
+/* Right-column wrapper (CTA + Related Products) sticks as one unit */
+.product-layout > div:last-child,
+.product-page-grid > div:last-child {
+  position: sticky;
   top: calc(var(--nav-h) + 24px);
+  align-self: start;
+  max-height: calc(100vh - var(--nav-h) - 48px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+@media (max-width: 1000px) {
+  .product-layout > div:last-child,
+  .product-page-grid > div:last-child {
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
 }
 .product-cta-box::before { content: ''; display: block; height: 3px; background: var(--red); border-radius: 2px; margin-bottom: 20px; }
 .product-cta-box h4 { margin-bottom: 8px; }
