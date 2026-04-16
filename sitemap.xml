@@ -7,7 +7,9 @@
   <url><loc>https://wallgreensformwork.com/contact.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wallgreensformwork.com/careers.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://wallgreensformwork.com/projects.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://wallgreensformwork.com/news.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://wallgreensformwork.com/news.html</loc><lastmod>2026-04-16</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://wallgreensformwork.com/news/bauma-conexpo-india-2024.html</loc><lastmod>2026-04-16</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://wallgreensformwork.com/news/excon-2025.html</loc><lastmod>2026-04-16</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
 
   <!-- Products -->
   <url><loc>https://wallgreensformwork.com/products/index.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
