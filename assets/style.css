@@ -13,8 +13,9 @@ body { font-family: 'Inter', sans-serif; color: var(--black); background: #fff; 
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 ul, ol { list-style: none; }
-sup { font-size: 0.5em; vertical-align: super; line-height: 0; font-weight: 600; letter-spacing: 0.02em; margin-left: 1px; position: relative; top: -0.15em; }
-h1 sup, h2 sup, h3 sup, .hero-title sup, .article-card__title sup { font-size: 0.4em; top: -0.25em; }
+sup { font-size: 0.6em; vertical-align: super; line-height: 0; }
+sup.tm, .tm { font-size: 0.55em; vertical-align: super; line-height: 0; font-weight: 700; letter-spacing: 0.02em; margin-left: 1px; }
+h1 sup.tm, h2 sup.tm, h3 sup.tm, .hero-title sup.tm, .article-card__title sup.tm { font-size: 0.45em; }
 button { font-family: inherit; cursor: pointer; }
 
 /* ── CSS VARIABLES ── */
