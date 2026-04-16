@@ -302,3 +302,188 @@
   }
 
 })();
+
+/* ============================================================
+   PDF DOWNLOAD GATE — Every PDF on the site is blocked behind
+   a lead-capture form. Users must submit name, company, phone,
+   email (city optional) before the file downloads. The lead is
+   sent to Web3Forms; the download fires instantly so users are
+   never blocked by a slow network.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var W3F_KEY = 'cd1dcb74-a9e7-4593-aa40-05beda0be453';
+
+  var MODAL_HTML =
+    '<div class="pdf-modal" id="pdf-modal" hidden aria-hidden="true" role="dialog" aria-labelledby="pdf-modal-heading">' +
+      '<div class="pdf-modal__backdrop" data-pdf-dismiss></div>' +
+      '<div class="pdf-modal__panel">' +
+        '<button type="button" class="pdf-modal__close" data-pdf-dismiss aria-label="Close">&times;</button>' +
+        '<div id="pdf-modal-form-wrap">' +
+          '<h3 id="pdf-modal-heading">Download <span id="pdf-modal-title">Brochure</span></h3>' +
+          '<p class="pdf-modal__sub">Share a few quick details and your PDF will download as soon as you submit. We will also email you a copy for your records.</p>' +
+          '<form id="pdf-request-form" novalidate>' +
+            '<input type="hidden" name="pdf_requested" id="pdf-field-name"/>' +
+            '<label>Full Name *<input name="name" type="text" required autocomplete="name"/></label>' +
+            '<label>Company / Site *<input name="company" type="text" required autocomplete="organization"/></label>' +
+            '<label>Phone *<input name="phone" type="tel" required autocomplete="tel" pattern="[0-9 +\\-]{7,20}"/></label>' +
+            '<label>Email *<input name="email" type="email" required autocomplete="email"/></label>' +
+            '<label>City<input name="city" type="text" autocomplete="address-level2"/></label>' +
+            '<div class="pdf-honeypot" aria-hidden="true"><label>Leave this blank<input type="text" name="botcheck" tabindex="-1" autocomplete="off"/></label></div>' +
+            '<button type="submit" class="btn btn--red">Submit &amp; Download PDF &rarr;</button>' +
+            '<p class="pdf-modal__fineprint">We respect your privacy. Your details are only used to follow up on your enquiry and are never sold or shared.</p>' +
+          '</form>' +
+        '</div>' +
+        '<div id="pdf-modal-success" class="pdf-modal__success" hidden>' +
+          '<div class="pdf-modal__success-icon">✅</div>' +
+          '<h3>Your download has started</h3>' +
+          '<p>Check your browser\'s downloads folder.</p>' +
+          '<p>If nothing downloaded, <a href="#" id="pdf-manual-link" style="color:var(--red);font-weight:600">click here to retry</a>.</p>' +
+          '<p style="margin-top:16px;font-size:13px">Questions? Call <a href="tel:+919321917724" style="color:var(--red);font-weight:600">+91 93219 17724</a>.</p>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+  function init() {
+    // Inject modal once per page
+    if (!document.getElementById('pdf-modal')) {
+      var wrapper = document.createElement('div');
+      wrapper.innerHTML = MODAL_HTML;
+      document.body.appendChild(wrapper.firstChild);
+    }
+
+    var modal       = document.getElementById('pdf-modal');
+    var formWrap    = document.getElementById('pdf-modal-form-wrap');
+    var successWrap = document.getElementById('pdf-modal-success');
+    var form        = document.getElementById('pdf-request-form');
+    var titleEl     = document.getElementById('pdf-modal-title');
+    var pdfField    = document.getElementById('pdf-field-name');
+    var manualLink  = document.getElementById('pdf-manual-link');
+
+    var currentPdf   = '';
+    var currentTitle = '';
+
+    function openModal(pdfUrl, title) {
+      currentPdf   = pdfUrl;
+      currentTitle = title;
+      titleEl.innerHTML = title;
+      pdfField.value    = title;
+      form.reset();
+      formWrap.hidden    = false;
+      successWrap.hidden = true;
+      modal.hidden = false;
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('pdf-modal-open');
+      var firstInput = form.querySelector('input[name="name"]');
+      if (firstInput) setTimeout(function () { firstInput.focus(); }, 50);
+    }
+
+    function closeModal() {
+      modal.hidden = true;
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('pdf-modal-open');
+    }
+
+    function triggerDownload(url, filename) {
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = filename || '';
+      a.rel = 'noopener';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function () {
+        if (a.parentNode) a.parentNode.removeChild(a);
+      }, 100);
+    }
+
+    function resolveTitle(el) {
+      if (el.dataset && el.dataset.title) return el.dataset.title;
+      var cta = el.closest('.product-cta-box');
+      if (cta) {
+        var h = cta.querySelector('h4');
+        if (h) return h.textContent.trim();
+      }
+      var card = el.closest('.download-card');
+      if (card) {
+        var name = card.querySelector('.download-name');
+        if (name) return name.textContent.trim();
+      }
+      var h1 = document.querySelector('h1');
+      if (h1) return h1.textContent.trim();
+      return 'Brochure';
+    }
+
+    function resolvePdf(el) {
+      return el.getAttribute('data-pdf') || '';
+    }
+
+    function wireTrigger(el) {
+      if (el.dataset.pdfGated === '1') return;
+      el.dataset.pdfGated = '1';
+      el.addEventListener('click', function (e) {
+        // Block all click types — strict gate
+        e.preventDefault();
+        e.stopPropagation();
+        var url = resolvePdf(el);
+        if (!url) return;
+        openModal(url, resolveTitle(el));
+      });
+    }
+
+    // Wire every element flagged as a PDF download trigger
+    document.querySelectorAll('[data-pdf]').forEach(wireTrigger);
+
+    // Dismiss wiring
+    modal.querySelectorAll('[data-pdf-dismiss]').forEach(function (el) {
+      el.addEventListener('click', closeModal);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !modal.hidden) closeModal();
+    });
+
+    // Manual retry link inside the success panel
+    if (manualLink) {
+      manualLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (currentPdf) triggerDownload(currentPdf, currentPdf.split('/').pop());
+      });
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+
+      var submitBtn = form.querySelector('[type="submit"]');
+      var originalText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+
+      var data = new FormData(form);
+      data.set('access_key', W3F_KEY);
+      var visitorName = data.get('name') || 'Website visitor';
+      data.set('from_name', 'Wallgreens Website');
+      data.set('subject', 'PDF download request — ' + currentTitle + ' · ' + visitorName + ' (formwork.in)');
+      data.set('replyto', data.get('email') || '');
+
+      // Trigger download immediately — never block customer on network
+      var filename = currentPdf.split('/').pop();
+      triggerDownload(currentPdf, filename);
+
+      // Fire-and-forget lead capture
+      fetch('https://api.web3forms.com/submit', { method: 'POST', body: data })
+        .catch(function () { /* lead capture failed silently */ });
+
+      formWrap.hidden    = true;
+      successWrap.hidden = false;
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
