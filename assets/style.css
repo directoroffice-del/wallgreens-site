@@ -887,6 +887,55 @@ footer {
 .team-role { font-size: 12px; color: var(--red); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
 .team-bio { font-size: 13px; color: var(--grey-600); line-height: 1.65; }
 
+/* ── TEAM GRID — photo variant (director / leadership portrait cards) ── */
+.team-grid--2 { grid-template-columns: repeat(2, 1fr); max-width: 760px; margin-left: auto; margin-right: auto; }
+.team-card.team-card--photo {
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  text-align: left;
+  background: #e8e8e8;
+  border: 1px solid #d9d9d9;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+}
+.team-card.team-card--photo:hover { box-shadow: 0 12px 32px rgba(0,0,0,0.14); }
+.team-card--photo .team-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.team-card.team-card--photo:hover .team-photo { transform: scale(1.03); }
+.team-photo--face-top    { object-position: center 12% !important; }
+.team-photo--face-center { object-position: center center !important; }
+.team-card--photo .team-label {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: #fff;
+  padding: 10px 18px;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+  min-width: 180px;
+  max-width: calc(100% - 32px);
+}
+.team-card--photo .team-name {
+  font-size: 17px;
+  margin-bottom: 2px;
+  text-align: left;
+  line-height: 1.2;
+}
+.team-card--photo .team-role {
+  font-size: 11.5px;
+  color: var(--red);
+  text-align: left;
+  margin-bottom: 0;
+  letter-spacing: 0.05em;
+}
+
 /* ── TIMELINE (About) — center rail with alternating cards ── */
 .timeline {
   position: relative;
