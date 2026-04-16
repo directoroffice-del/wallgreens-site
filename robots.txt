@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /_content/
 
-Sitemap: https://wallgreensformwork.com/sitemap.xml
+Sitemap: https://formwork.in/sitemap.xml
