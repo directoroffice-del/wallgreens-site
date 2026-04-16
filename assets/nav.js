@@ -92,37 +92,44 @@
   }, { threshold: 0.5 });
   document.querySelectorAll('.stats-row').forEach(r => statObserver.observe(r));
 
-  /* ── Contact / enquiry form with EmailJS ── */
-  // SETUP: replace these with your EmailJS credentials
-  // Guide: https://www.emailjs.com/docs/sdk/send/
-  const EJS_SERVICE  = 'YOUR_SERVICE_ID';
-  const EJS_TEMPLATE = 'YOUR_TEMPLATE_ID';
-  const EJS_KEY      = 'YOUR_PUBLIC_KEY';
-
-  if (window.emailjs) emailjs.init({ publicKey: EJS_KEY });
+  /* ── Contact / enquiry form with Web3Forms ── */
+  // Emails delivered to directoroffice@wallgreens.in via web3forms.com
+  const W3F_ACCESS_KEY = 'cd1dcb74-a9e7-4593-aa40-05beda0be453';
 
   document.querySelectorAll('form[data-enquiry]').forEach(form => {
-    form.addEventListener('submit', e => {
+    form.addEventListener('submit', async e => {
       e.preventDefault();
       const btn = form.querySelector('[type="submit"]');
-      const inputs = form.querySelectorAll('input,select,textarea');
-      const params = {};
-      inputs.forEach(inp => { if (inp.name) params[inp.name] = inp.value; });
+      const originalBtnText = btn ? btn.textContent : '';
+      if (btn) { btn.textContent = 'Sending…'; btn.disabled = true; }
 
-      if (!window.emailjs || EJS_SERVICE === 'YOUR_SERVICE_ID') {
-        // Dev fallback: just show success
-        showFormSuccess(form);
-        return;
-      }
-      btn.textContent = 'Sending…';
-      btn.disabled = true;
-      emailjs.send(EJS_SERVICE, EJS_TEMPLATE, params)
-        .then(() => showFormSuccess(form))
-        .catch(err => {
-          btn.disabled = false;
-          btn.textContent = 'Submit Enquiry';
-          alert('Could not send. Please call +91 93219 17724\nError: ' + (err.text || err));
+      // Build payload from all named inputs
+      const formData = new FormData(form);
+      formData.set('access_key', W3F_ACCESS_KEY);
+      // Clean subject line shown in the email
+      const name = formData.get('from_name') || formData.get('name') || 'Website visitor';
+      const product = formData.get('product') || formData.get('subject') || '';
+      formData.set('subject', `New enquiry — ${name}${product ? ' · ' + product : ''} (formwork.in)`);
+      formData.set('from_name', 'Wallgreens Website');
+      formData.set('replyto', formData.get('email') || '');
+      // Honeypot spam guard (Web3Forms reads `botcheck`)
+      if (!formData.has('botcheck')) formData.set('botcheck', '');
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
         });
+        const data = await res.json();
+        if (data.success) {
+          showFormSuccess(form);
+        } else {
+          throw new Error(data.message || 'Submission failed');
+        }
+      } catch (err) {
+        if (btn) { btn.disabled = false; btn.textContent = originalBtnText || 'Submit Enquiry'; }
+        alert('Could not send your enquiry right now. Please call +91 93219 17724 or email directoroffice@wallgreens.in directly.\n\nError: ' + err.message);
+      }
     });
   });
 
@@ -131,7 +138,7 @@
       <div style="text-align:center;padding:40px 20px">
         <div style="font-size:48px;margin-bottom:16px">✅</div>
         <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:24px;margin-bottom:8px">Enquiry Sent!</h3>
-        <p style="color:#555;font-size:14px">Our team will respond to <strong>directoroffice@wallgreens.in</strong> within 24 hours.</p>
+        <p style="color:#555;font-size:14px">Our team will respond from <strong>directoroffice@wallgreens.in</strong> within 72 hours.</p>
         <p style="margin-top:16px;font-size:13px;color:#D32F2F">📞 Urgent? Call <a href="tel:+919321917724" style="color:#D32F2F;font-weight:600">+91 93219 17724</a></p>
       </div>`;
   }
