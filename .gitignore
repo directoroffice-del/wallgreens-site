@@ -4,3 +4,15 @@ Thumbs.db
 node_modules/
 .vscode/
 .idea/
+
+# PDF compression backups (kept locally for safety, never deployed)
+assets/_pdf_originals/
+
+# Local tmp/helper scripts (used during edits, not shipped)
+preview_sample.png
+*.tmp.pdf
+extract_*.py
+compress_*.py
+fix_*.py
+crop_*.py
+audit_*.py
