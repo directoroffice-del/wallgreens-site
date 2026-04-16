@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
   <title>Wallgreens — Admin Panel</title>
-  <!-- Decap CMS (formerly Netlify CMS) -->
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <link rel="icon" type="image/png" href="/assets/wallgreens-logo.png" />
 </head>
 <body>
-  <!-- Decap CMS mounts here -->
+  <!-- Decap CMS mount target -->
+  <div id="nc-root"></div>
+
+  <!-- Pinned version so it keeps working even if unpkg moves the default -->
+  <script src="https://unpkg.com/decap-cms@3.1.10/dist/decap-cms.js"></script>
 </body>
 </html>
