@@ -415,7 +415,7 @@ header { height: 0; overflow: visible; }
 .clients-marquee:hover .clients-track { animation-play-state: paused; }
 .clients-track {
   display: flex; flex-wrap: nowrap; align-items: center; gap: 48px;
-  width: max-content; animation: clients-scroll 80s linear infinite;
+  width: max-content; animation: clients-scroll 40s linear infinite;
   padding: 0 28px;
 }
 .clients-track .client-logo { flex: 0 0 auto; }
