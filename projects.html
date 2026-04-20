@@ -16,6 +16,12 @@
   <style>
     /* FORCE projects visibility — nuclear override */
     body { opacity: 1 !important; animation: none !important; }
+    /* Kill data-reveal opacity:0 behavior — this was hiding the project section */
+    [data-reveal], [data-reveal-stagger] {
+      opacity: 1 !important;
+      transform: none !important;
+      visibility: visible !important;
+    }
     main#main { opacity: 1 !important; visibility: visible !important; display: block !important; }
     main section { opacity: 1 !important; visibility: visible !important; display: block !important; }
     [data-tabs] { opacity: 1 !important; visibility: visible !important; display: block !important; }
