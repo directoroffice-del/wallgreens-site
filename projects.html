@@ -14,19 +14,34 @@
   <link rel="icon" type="image/png" href="assets/favicon.png" />
   <link rel="stylesheet" href="assets/style.css?v=6" />
   <style>
-    /* FORCE projects tab visibility — bypasses any CSS cache issues */
+    /* FORCE projects visibility — nuclear override */
+    body { opacity: 1 !important; animation: none !important; }
+    main#main { opacity: 1 !important; visibility: visible !important; display: block !important; }
+    main section { opacity: 1 !important; visibility: visible !important; display: block !important; }
+    [data-tabs] { opacity: 1 !important; visibility: visible !important; display: block !important; }
     .tab-content[data-tab="all"] {
       display: grid !important;
       opacity: 1 !important;
       visibility: visible !important;
       grid-template-columns: repeat(3, 1fr) !important;
       gap: 28px !important;
+      animation: none !important;
+      transform: none !important;
     }
     .tab-content[data-tab="all"] .project-card {
       display: block !important;
       opacity: 1 !important;
       visibility: visible !important;
+      background: #fff !important;
+      border: 1px solid #e0e0e0 !important;
+      border-radius: 8px !important;
+      overflow: hidden !important;
     }
+    .tab-content[data-tab="all"] .project-card__body { padding: 24px !important; display: block !important; }
+    .tab-content[data-tab="all"] .project-card h3 { font-size: 18px !important; margin-bottom: 8px !important; }
+    .tab-content[data-tab="all"] .project-card p { font-size: 14px !important; color: #444 !important; }
+    .tab-content[data-tab="all"] .project-card__img { height: 200px !important; background: #f0f0f0 !important; display: block !important; }
+    .tab-content[data-tab="all"] .project-card__img img { width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important; }
     @media (max-width: 900px) {
       .tab-content[data-tab="all"] { grid-template-columns: repeat(2, 1fr) !important; }
     }
