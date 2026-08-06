@@ -23,11 +23,26 @@
     badge.setAttribute('aria-label', 'Meet Wallgreens at bauma CONEXPO INDIA 2026 — 15–18 September, Greater Noida');
     badge.innerHTML =
       '<button type="button" class="bauma-badge__close" aria-label="Close"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 2 L10 10 M10 2 L2 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>' +
-      '<div class="bauma-badge__eyebrow">Meet us at</div>' +
-      '<div class="bauma-badge__title" id="bauma-badge-title">bauma CONEXPO INDIA 2026</div>' +
-      '<div class="bauma-badge__stall">Stall <strong>H15 · G51</strong></div>' +
-      '<div class="bauma-badge__date">15–18 September · Greater Noida</div>' +
-      '<div class="bauma-badge__cta">Register &amp; Visit Us →</div>';
+      '<div class="bauma__header">' +
+        '<span class="bauma__edition">8th International Trade Fair</span>' +
+        '<h3 class="bauma__title" id="bauma-badge-title">bauma <strong>CONEXPO</strong> INDIA 2026</h3>' +
+        '<p class="bauma__sub">Construction Machinery · Building Material · Mining · Vehicles</p>' +
+      '</div>' +
+      '<div class="bauma__body">' +
+        '<div class="bauma__eyebrow">Meet Wallgreens at</div>' +
+        '<h4 class="bauma__pitch">India Expo Centre,<br>Greater Noida · Delhi NCR</h4>' +
+        '<div class="bauma__details">' +
+          '<div class="bauma__detail">' +
+            '<div class="bauma__detail-label">Dates</div>' +
+            '<div class="bauma__detail-value">15–18 Sep</div>' +
+          '</div>' +
+          '<div class="bauma__detail bauma__detail--stall">' +
+            '<div class="bauma__detail-label">Our Stall</div>' +
+            '<div class="bauma__detail-value">H15 · G51</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="bauma__cta">Register &amp; Visit Us →</div>' +
+      '</div>';
     overlay.appendChild(badge);
     document.body.appendChild(overlay);
 
