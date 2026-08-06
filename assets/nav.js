@@ -14,7 +14,7 @@
     badge.rel = 'noopener';
     badge.setAttribute('aria-label', 'Meet Wallgreens at bauma CONEXPO INDIA 2026 — 15–18 September, Greater Noida');
     badge.innerHTML =
-      '<button type="button" class="bauma-badge__close" aria-label="Hide for this page">&times;</button>' +
+      '<button type="button" class="bauma-badge__close" aria-label="Hide for this page"><svg viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M2 2 L10 10 M10 2 L2 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>' +
       '<div class="bauma-badge__eyebrow">Meet us at</div>' +
       '<div class="bauma-badge__title">bauma <br>CONEXPO<br>INDIA 2026</div>' +
       '<div class="bauma-badge__stall">Stall <strong>H15 · G51</strong></div>' +

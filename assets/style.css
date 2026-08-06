@@ -838,14 +838,15 @@ footer {
 #bauma-badge .bauma-badge__date { font-family: var(--font-body); font-size: 11px; font-weight: 500; opacity: .95; line-height: 1.35; }
 #bauma-badge .bauma-badge__cta { font-family: var(--font-display); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; background: rgba(0,0,0,0.25); padding: 7px 8px; border-radius: 4px; text-align: center; margin-top: 4px; }
 #bauma-badge .bauma-badge__close {
-  position: absolute; top: 4px; right: 4px;
+  position: absolute; top: 6px; right: 6px;
   width: 22px; height: 22px; padding: 0;
-  background: rgba(0,0,0,0.25); color: #fff;
+  background: rgba(0,0,0,0.28); color: #fff;
   border: none; border-radius: 50%;
-  font-size: 16px; line-height: 1; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
   transition: background .15s;
 }
+#bauma-badge .bauma-badge__close svg { display: block; }
 #bauma-badge .bauma-badge__close:hover { background: rgba(0,0,0,0.55); }
 @media (max-width: 700px) {
   #bauma-badge { width: 152px; height: 176px; padding: 12px 12px 10px; left: 12px; bottom: 12px; }
