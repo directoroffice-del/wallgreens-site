@@ -5,8 +5,10 @@
 (function () {
   'use strict';
 
-  /* ── bauma CONEXPO INDIA 2026 centered modal popup (per-page-load; reappears on refresh) ── */
-  if (!document.getElementById('bauma-overlay')) {
+  /* ── bauma CONEXPO INDIA 2026 centered modal popup — home page only, per-page-load ── */
+  const _p = window.location.pathname.replace(/\/$/, '').toLowerCase();
+  const _isHome = _p === '' || _p === '/index.html' || _p === '/index' || _p.endsWith('/wallgreens-site') || _p.endsWith('/wallgreens-site/index.html');
+  if (_isHome && !document.getElementById('bauma-overlay')) {
     const overlay = document.createElement('div');
     overlay.id = 'bauma-overlay';
     overlay.setAttribute('role', 'dialog');
