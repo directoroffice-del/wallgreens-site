@@ -116,7 +116,13 @@
         const cards = panels[0].querySelectorAll('[data-cat]');
         cards.forEach(card => {
           const cats = (card.dataset.cat || '').split(/\s+/);
-          card.style.display = (target === 'all' || cats.indexOf(target) !== -1) ? '' : 'none';
+          const match = (target === 'all' || cats.indexOf(target) !== -1);
+          // Use !important to beat page-level '.tab-content.active .project-card { display: block !important }' rules
+          if (match) {
+            card.style.removeProperty('display');
+          } else {
+            card.style.setProperty('display', 'none', 'important');
+          }
         });
       }
     });
