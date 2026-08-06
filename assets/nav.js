@@ -17,6 +17,7 @@
       '<button type="button" class="bauma-badge__close" aria-label="Hide for this page">&times;</button>' +
       '<div class="bauma-badge__eyebrow">Meet us at</div>' +
       '<div class="bauma-badge__title">bauma <br>CONEXPO<br>INDIA 2026</div>' +
+      '<div class="bauma-badge__stall">Stall <strong>H15 · G51</strong></div>' +
       '<div class="bauma-badge__date">15–18 Sep · Greater Noida</div>' +
       '<div class="bauma-badge__cta">Visit Us →</div>';
     document.body.appendChild(badge);
