@@ -5,8 +5,8 @@
 (function () {
   'use strict';
 
-  /* ── bauma CONEXPO INDIA 2026 floating badge ── */
-  if (!document.getElementById('bauma-badge') && !sessionStorage.getItem('baumaBarDismissed')) {
+  /* ── bauma CONEXPO INDIA 2026 floating badge (always visible on every page load) ── */
+  if (!document.getElementById('bauma-badge')) {
     const badge = document.createElement('a');
     badge.id = 'bauma-badge';
     badge.href = 'https://mmiconnect.in/bci-2026/visitor/registrationform?source=GH&medium=paidcampaigns&campaign=GH_Expo_280726&utm_source=GH&utm_medium=paidcampaigns&utm_campaign=Google_GH_Expo_280726';
@@ -14,16 +14,16 @@
     badge.rel = 'noopener';
     badge.setAttribute('aria-label', 'Meet Wallgreens at bauma CONEXPO INDIA 2026 — 15–18 September, Greater Noida');
     badge.innerHTML =
-      '<button type="button" class="bauma-badge__close" aria-label="Dismiss">&times;</button>' +
+      '<button type="button" class="bauma-badge__close" aria-label="Hide for this page">&times;</button>' +
       '<div class="bauma-badge__eyebrow">Meet us at</div>' +
       '<div class="bauma-badge__title">bauma <br>CONEXPO<br>INDIA 2026</div>' +
       '<div class="bauma-badge__date">15–18 Sep · Greater Noida</div>' +
       '<div class="bauma-badge__cta">Visit Us →</div>';
     document.body.appendChild(badge);
+    /* dismiss is per-page only — no storage. Reload or navigate → badge comes back. */
     badge.querySelector('.bauma-badge__close').addEventListener('click', (e) => {
       e.preventDefault(); e.stopPropagation();
       badge.remove();
-      try { sessionStorage.setItem('baumaBarDismissed', '1'); } catch(e){}
     });
   }
 
