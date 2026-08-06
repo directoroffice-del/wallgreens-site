@@ -5,8 +5,14 @@
 (function () {
   'use strict';
 
-  /* ── bauma CONEXPO INDIA 2026 floating badge (always visible on every page load) ── */
-  if (!document.getElementById('bauma-badge')) {
+  /* ── bauma CONEXPO INDIA 2026 centered modal popup (per-page-load; reappears on refresh) ── */
+  if (!document.getElementById('bauma-overlay')) {
+    const overlay = document.createElement('div');
+    overlay.id = 'bauma-overlay';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-labelledby', 'bauma-badge-title');
+
     const badge = document.createElement('a');
     badge.id = 'bauma-badge';
     badge.href = 'https://mmiconnect.in/bci-2026/visitor/registrationform?source=GH&medium=paidcampaigns&campaign=GH_Expo_280726&utm_source=GH&utm_medium=paidcampaigns&utm_campaign=Google_GH_Expo_280726';
@@ -14,17 +20,30 @@
     badge.rel = 'noopener';
     badge.setAttribute('aria-label', 'Meet Wallgreens at bauma CONEXPO INDIA 2026 — 15–18 September, Greater Noida');
     badge.innerHTML =
-      '<button type="button" class="bauma-badge__close" aria-label="Hide for this page"><svg viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M2 2 L10 10 M10 2 L2 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>' +
+      '<button type="button" class="bauma-badge__close" aria-label="Close"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 2 L10 10 M10 2 L2 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>' +
       '<div class="bauma-badge__eyebrow">Meet us at</div>' +
-      '<div class="bauma-badge__title">bauma <br>CONEXPO<br>INDIA 2026</div>' +
+      '<div class="bauma-badge__title" id="bauma-badge-title">bauma CONEXPO INDIA 2026</div>' +
       '<div class="bauma-badge__stall">Stall <strong>H15 · G51</strong></div>' +
-      '<div class="bauma-badge__date">15–18 Sep · Greater Noida</div>' +
-      '<div class="bauma-badge__cta">Visit Us →</div>';
-    document.body.appendChild(badge);
-    /* dismiss is per-page only — no storage. Reload or navigate → badge comes back. */
+      '<div class="bauma-badge__date">15–18 September · Greater Noida</div>' +
+      '<div class="bauma-badge__cta">Register &amp; Visit Us →</div>';
+    overlay.appendChild(badge);
+    document.body.appendChild(overlay);
+
+    /* Close button dismisses for the rest of this page load only; a refresh brings it back. */
     badge.querySelector('.bauma-badge__close').addEventListener('click', (e) => {
       e.preventDefault(); e.stopPropagation();
-      badge.remove();
+      overlay.remove();
+    });
+    /* Prevent overlay backdrop clicks from following the anchor href */
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) e.preventDefault();
+    });
+    /* Escape key closes as well */
+    document.addEventListener('keydown', function baumaEsc(e) {
+      if (e.key === 'Escape' && document.getElementById('bauma-overlay')) {
+        overlay.remove();
+        document.removeEventListener('keydown', baumaEsc);
+      }
     });
   }
 
