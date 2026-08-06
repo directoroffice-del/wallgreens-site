@@ -83,10 +83,21 @@
       if (!group) return;
       const target = btn.dataset.tab;
       group.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      group.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
       btn.classList.add('active');
-      const panel = group.querySelector(`.tab-content[data-tab="${target}"]`);
-      if (panel) panel.classList.add('active');
+      const panels = group.querySelectorAll('.tab-content[data-tab]');
+      if (panels.length > 1) {
+        // Classic mode: separate tab-content div per tab
+        panels.forEach(c => c.classList.remove('active'));
+        const panel = group.querySelector(`.tab-content[data-tab="${target}"]`);
+        if (panel) panel.classList.add('active');
+      } else if (panels.length === 1) {
+        // Filter mode: one shared container, filter cards by data-cat
+        const cards = panels[0].querySelectorAll('[data-cat]');
+        cards.forEach(card => {
+          const cats = (card.dataset.cat || '').split(/\s+/);
+          card.style.display = (target === 'all' || cats.indexOf(target) !== -1) ? '' : 'none';
+        });
+      }
     });
   });
 
