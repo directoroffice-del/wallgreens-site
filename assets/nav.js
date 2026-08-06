@@ -5,20 +5,24 @@
 (function () {
   'use strict';
 
-  /* ── bauma CONEXPO INDIA 2026 announcement bar ── */
-  if (!document.getElementById('bauma-bar') && !sessionStorage.getItem('baumaBarDismissed')) {
-    const bar = document.createElement('div');
-    bar.id = 'bauma-bar';
-    bar.innerHTML =
-      '<div class="bauma-bar__inner">' +
-        '<span class="bauma-bar__tag">bauma CONEXPO INDIA 2026</span>' +
-        '<span class="bauma-bar__text">Meet us at the 8th International Trade Fair for Construction Machinery — <strong>15–18 September 2026, India Expo Centre, Greater Noida</strong>.</span>' +
-        '<a href="https://www.baumaconexpoindia.com/" target="_blank" rel="noopener" class="bauma-bar__cta">Visit Us →</a>' +
-        '<button type="button" class="bauma-bar__close" aria-label="Dismiss announcement">&times;</button>' +
-      '</div>';
-    document.body.insertBefore(bar, document.body.firstChild);
-    bar.querySelector('.bauma-bar__close').addEventListener('click', () => {
-      bar.remove();
+  /* ── bauma CONEXPO INDIA 2026 floating badge ── */
+  if (!document.getElementById('bauma-badge') && !sessionStorage.getItem('baumaBarDismissed')) {
+    const badge = document.createElement('a');
+    badge.id = 'bauma-badge';
+    badge.href = 'https://mmiconnect.in/bci-2026/visitor/registrationform?source=GH&medium=paidcampaigns&campaign=GH_Expo_280726&utm_source=GH&utm_medium=paidcampaigns&utm_campaign=Google_GH_Expo_280726';
+    badge.target = '_blank';
+    badge.rel = 'noopener';
+    badge.setAttribute('aria-label', 'Meet Wallgreens at bauma CONEXPO INDIA 2026 — 15–18 September, Greater Noida');
+    badge.innerHTML =
+      '<button type="button" class="bauma-badge__close" aria-label="Dismiss">&times;</button>' +
+      '<div class="bauma-badge__eyebrow">Meet us at</div>' +
+      '<div class="bauma-badge__title">bauma <br>CONEXPO<br>INDIA 2026</div>' +
+      '<div class="bauma-badge__date">15–18 Sep · Greater Noida</div>' +
+      '<div class="bauma-badge__cta">Visit Us →</div>';
+    document.body.appendChild(badge);
+    badge.querySelector('.bauma-badge__close').addEventListener('click', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      badge.remove();
       try { sessionStorage.setItem('baumaBarDismissed', '1'); } catch(e){}
     });
   }
