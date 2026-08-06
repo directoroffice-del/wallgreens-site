@@ -5,6 +5,24 @@
 (function () {
   'use strict';
 
+  /* ── bauma CONEXPO INDIA 2026 announcement bar ── */
+  if (!document.getElementById('bauma-bar') && !sessionStorage.getItem('baumaBarDismissed')) {
+    const bar = document.createElement('div');
+    bar.id = 'bauma-bar';
+    bar.innerHTML =
+      '<div class="bauma-bar__inner">' +
+        '<span class="bauma-bar__tag">bauma CONEXPO INDIA 2026</span>' +
+        '<span class="bauma-bar__text">Meet us at the 8th International Trade Fair for Construction Machinery — <strong>15–18 September 2026, India Expo Centre, Greater Noida</strong>.</span>' +
+        '<a href="https://www.baumaconexpoindia.com/" target="_blank" rel="noopener" class="bauma-bar__cta">Visit Us →</a>' +
+        '<button type="button" class="bauma-bar__close" aria-label="Dismiss announcement">&times;</button>' +
+      '</div>';
+    document.body.insertBefore(bar, document.body.firstChild);
+    bar.querySelector('.bauma-bar__close').addEventListener('click', () => {
+      bar.remove();
+      try { sessionStorage.setItem('baumaBarDismissed', '1'); } catch(e){}
+    });
+  }
+
   /* ── Mobile hamburger ── */
   const ham   = document.getElementById('nav-hamburger');
   const drawer = document.getElementById('nav-mobile');

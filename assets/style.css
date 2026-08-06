@@ -814,6 +814,21 @@ footer {
 .footer-social a:hover svg { fill: var(--red); }
 .footer-tagline { margin-top: 20px; text-align: left; line-height: 1; }
 .footer-tagline img { display: block; max-width: 180px; height: auto; }
+
+/* ── bauma CONEXPO INDIA 2026 announcement bar ── */
+#bauma-bar { background: linear-gradient(90deg, #111 0%, #1f2937 100%); color: #fff; font-size: 13px; line-height: 1.4; border-bottom: 2px solid #FFE800; position: relative; z-index: 1001; }
+#bauma-bar .bauma-bar__inner { max-width: 1200px; margin: 0 auto; padding: 8px 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+#bauma-bar .bauma-bar__tag { background: #FFE800; color: #111; font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; padding: 3px 8px; border-radius: 3px; white-space: nowrap; }
+#bauma-bar .bauma-bar__text { flex: 1 1 auto; min-width: 220px; color: rgba(255,255,255,0.92); }
+#bauma-bar .bauma-bar__text strong { color: #fff; }
+#bauma-bar .bauma-bar__cta { background: var(--red); color: #fff; text-decoration: none; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; padding: 6px 14px; border-radius: 3px; white-space: nowrap; transition: background .15s; }
+#bauma-bar .bauma-bar__cta:hover { background: #b30000; }
+#bauma-bar .bauma-bar__close { background: transparent; border: none; color: rgba(255,255,255,0.65); font-size: 22px; line-height: 1; cursor: pointer; padding: 4px 8px; margin-left: 4px; transition: color .15s; }
+#bauma-bar .bauma-bar__close:hover { color: #fff; }
+@media (max-width: 700px) {
+  #bauma-bar .bauma-bar__inner { gap: 10px; padding: 8px 14px; }
+  #bauma-bar .bauma-bar__text { font-size: 12px; }
+}
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.07);
   padding: 20px 0;
