@@ -2,6 +2,7 @@
   "name": "wallgreens-site",
   "compatibility_date": "2025-01-01",
   "assets": {
-    "directory": "./"
+    "directory": "./",
+    "html_handling": "none"
   }
 }
